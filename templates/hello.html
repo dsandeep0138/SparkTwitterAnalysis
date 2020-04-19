@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Real time data analysis</title>
+</head>
+
+<body>
+
+	<img src="{{ img_path }}">
+
+{% for tweet in tweets %}
+    <p> {{ tweet }} </p>
+{% endfor %}
+
+{% for word in words %}
+    <p> {{ word }} </p>
+{% endfor %}
+
+</body>
+</html>
