@@ -4,19 +4,60 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Real time data analysis</title>
+	 <link rel="stylesheet" type="text/css" href="static/css/dashboard.css">
+
 </head>
 
 <body>
+	<div class="container">
+		  <div class="toppane">We can write counts here</div>
 
-	<img src="{{ img_path }}">
+		  <div class="leftpane">
+		    <h1>Raw Tweets</h1>
+		    {% for tweet in tweets %}
+			    <p> {{ tweet }} </p>
+			{% endfor %}
 
-{% for tweet in tweets %}
-    <p> {{ tweet }} </p>
-{% endfor %}
+		  </div>
+		  <div class="rightpane">
 
-{% for word in words %}
-    <p> {{ word }} </p>
-{% endfor %}
+		  	<div id="div1">
+		  		<img src="{{ img_path }}" alt="word cloud">
+			</div>
+			<div id="div2">
+			</div>
+			<div id="div3">
+			</div>
+			<div id="div4">
+			</div>
+
+
+		     
+		   </div>
+	</div>
+
+	<!--<div>
+		{% for tweet in tweets %}
+		    <p> {{ tweet }} </p>
+		{% endfor %}
+	</div>
+
+	<div>
+		<img src="{{ img_path }}">
+	</div>
+
+	<div>
+			
+	{% for word in words %}
+	    <p> {{ word }} </p>
+	{% endfor %}
+
+	</div>-->
+
+	
+
+
+
 
 </body>
 </html>

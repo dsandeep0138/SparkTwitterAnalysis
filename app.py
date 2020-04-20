@@ -12,7 +12,15 @@ word_counts = {'words': [], 'counts': []}
 def home_page():
     global tweets
     global word_counts
-    
+    tweets = {'users': ['RchavezRuben', 'whalesharkandme'], 'text': ['RT @KenDilanianNBC: Imagine if, two months ago, a competent federal government had led a World War II-level effort to ramp up production of…', 'I have been listening to @levarburton read on Friday nights. It’s such a wonderful distraction from all the COVID-1… https://t.co/QqGOeg5xP5']}
+    word_counts = {'words': ['#COVID19…', '#FlatteningtheCurve', '#SocialDistancing', '#Health', '#SelfQuarantine', '#Hygiene', '#coronavirus', '#COVID19', '#Coronavirus', '#Gravitas'], 'counts': [16, 15, 15, 15, 15, 15, 6, 5, 3, 2]}
+	
+	
+    print("Tweets variable", file=sys.stderr)
+    print(tweets , file=sys.stderr)
+    print("word count variable", file=sys.stderr)
+    print(word_counts , file=sys.stderr)
+	
     print(word_counts['words'], file=sys.stderr)
     img_path = os.path.join(app.config['IMAGES_PATH'], 'wordcloud.jpg')
     
