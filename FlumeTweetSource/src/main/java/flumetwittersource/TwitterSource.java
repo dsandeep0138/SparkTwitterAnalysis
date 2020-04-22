@@ -1,5 +1,6 @@
 package flumetwittersource;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.json.DataObjectFactory;
-
+import java.util.Random;
 public class TwitterSource extends AbstractSource implements EventDrivenSource, Configurable {
 
     private String consumerKey;
@@ -31,7 +32,7 @@ public class TwitterSource extends AbstractSource implements EventDrivenSource, 
     private String[] keywords;
 
     private TwitterStream twitterStream;
-
+    private Random random = new Random();
     @Override
     public void configure(Context context) {
         consumerKey = context.getString("consumerKey");
@@ -63,10 +64,15 @@ public class TwitterSource extends AbstractSource implements EventDrivenSource, 
 
             public void onStatus(Status status) {
                 headers.put("timestamp", String.valueOf(status.getCreatedAt().getTime()));
-                Event event = EventBuilder.withBody(
-                        DataObjectFactory.getRawJSON(status).getBytes(), headers);
-
-                channel.processEvent(event);
+                try {
+                    Event event = EventBuilder.withBody(
+                            DataObjectFactory.getRawJSON(status).getBytes(StandardCharsets.UTF_8), headers);
+                    channel.processEvent(event);
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    System.out.println("Couldn't sleep");
+                    throw new RuntimeException("Got exception in thread sleep");
+                }
             }
 
             public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
