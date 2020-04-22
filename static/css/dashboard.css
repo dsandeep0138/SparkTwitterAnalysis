@@ -1,51 +1,57 @@
-body, html {
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.title {
+    background: #657786 !important;
+    color: #FFF;
+}
+.header {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+}
+.counter_container {
+    float: left;
+    width: 20%;
+    text-align: center;
+    background-color: #E1E8ED;
+    height: 100px;
+}
+
+
+.my_container {
   width: 100%;
   height: 100%;
-  margin: 0;
+  
 }
 
-.container {
-  width: 100%;
-  height: 100%;
+.total_counter {
+    background-color: #AAB8C2; !important;
+    text-align:center;
 }
 
-.leftpane {
-    width: 25%;
-    height: 100%;
-    float: left;
-    background-color: #D4EFDF;
-    border-collapse: collapse;
-}
-
-.middlepane {
-    width: 25%;
-    height: 100%;
-    float: left;
-    background-color: #E8DAEF;
-    border-collapse: collapse;
-}
 
 .rightpane {
-  width: 75%;
+  width:66%; 
   height: 100%;
   position: relative;
   float: right;
-  background-color: #E8DAEF;
   border-collapse: collapse;
-  margin-left: 0;
+  padding: 10px;
+  background-color: #F4F6F6;
+  
 }
 
-.toppane {
-  width: 100%;
-  height: 100px;
-  border-collapse: collapse;
-  background-color: #FAE5D3 ;
-}
 
 #div1 { 
   width: 50%;
-   height: 50%;
-    float: left;
+  height: 50%;
+  float: left;
   background: #DDD; 
 }
 #div2 {
@@ -57,12 +63,55 @@ body, html {
 #div3 { 
   width: 50%;
    height: 50%;
-    float: left;
-  background: #777;
+  float: left;
+  background: #F0B27A ;
    }
 #div4 {
   width: 50%;
    height: 50%; 
    float: left;
  background: #444; 
+}
+
+.card {
+  border: 1px solid #d3d3d3;
+  border-radius: .25rem;
+   padding: 15px;
+}
+
+
+
+.leftpane {
+    width: 30%;
+    height: 100%;
+    float: left;
+    padding: 10px;
+    background-color: #F2F4F4 ;
+    border: 1px solid #F4F6F6;
+    border-collapse: collapse;
+}
+
+#first{ 
+  width: 50%; 
+  height: 250px; 
+  float: left;   
+  
+}
+#second { 
+  width: 50%;
+ height: 250px; 
+  float: left;
+  
+  }
+#third { 
+  width: 100%; 
+   height: 250px; 
+  float: left;  
+   
+}
+#fourth{
+width: 50%;
+ height: 250px;   
+ float: left;
+  
 }
