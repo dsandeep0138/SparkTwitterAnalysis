@@ -12,8 +12,8 @@ setInterval(function(){
     $.ajax({url: '/word_cloud', success: function(data) {
     console.log(data)
     var words_data = $.parseJSON(data);
-    $('#div1').html("")
-    $('#div1').jQCloud(words_data, {
+    $('#first').html("")
+    $('#first').jQCloud(words_data, {
                autoResize: true
        });
     }});
