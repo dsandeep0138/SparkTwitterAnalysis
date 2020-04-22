@@ -4,11 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Real time data analysis</title>
-	 <link rel="stylesheet" type="text/css" href="static/css/dashboard.css">
-
+	<link rel="stylesheet" type="text/css" href="static/css/dashboard.css">
+	<link rel="stylesheet" href="static/css/jqcloud.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="static/js/jqcloud-1.0.4.js"></script>
+	<script src="static/js/scripts2.js"></script>
 </head>
 
-<body>	  
+<body>
 
 		<div class="header">
 
@@ -41,7 +44,7 @@
     	</div>
 
     	<div class="my_container">
-	    	<div class="leftpane">
+	    	<div id="RawTweets" class="leftpane">
 	    		<h3><center>Most Relevent Tweets</center></h3>
 
 	    		{% for tweet in tweets %}
@@ -61,27 +64,27 @@
 			<div id="third">
 		  		<h1>Map will come here</h1>
 			</div>
-			
-			
 
-			
 
-		</div>	
+
+
+
+		</div>
 
 	    </div>
 
     	<!--
-		
+
 		<div id="div1">
 		  		<img src="{{ img_path }}" alt="word cloud">
 			</div>
-			
+
 			<div id="div2">
 			</div>
 			<div id="div3">
 			</div>
 			<div id="div4">
-			</div>	
+			</div>
 
 		<div class="card">
 			  <div class="content">
@@ -97,7 +100,6 @@
 			{% endfor %}
 
 		  </div>
-
 		  <div class="rightpane">
 
 		  	<div id="div1">
