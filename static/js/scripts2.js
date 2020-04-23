@@ -26,7 +26,19 @@ setInterval(function(){
     $('#RawTweets').html("")
     $("#RawTweets").append("<h1>Raw Tweets</h1>")
     $.each(tweets_data, function(i, item) {
-            $("#RawTweets").append("<p>" + item + "</p>");
+            $("#RawTweets").append("<div class=\"card\">" + item + "</div>");
+    });
+    }});
+},5000);
+
+setInterval(function(){
+    $.ajax({url: '/word_counts', success: function(data) {
+    console.log(data)
+    var counts_data = $.parseJSON(data);
+    $('#second').html("")
+    $("#second").append("<h1>Bar chart will go here</h1>")
+    $.each(counts_data, function(i, item) {
+            $("#second").append("<p>" + item + "</p>");
     });
     }});
 },5000);

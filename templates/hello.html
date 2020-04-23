@@ -9,11 +9,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="static/js/jqcloud-1.0.4.js"></script>
 	<script src="static/js/scripts2.js"></script>
+ 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 </head>
 
 <body>
-
-		<div class="header">
+	<div class="header">
 
         <div class="counter_container title">
             <h3>Real-Time Twitter Analysis</h3>
@@ -47,72 +48,23 @@
 	    		<h3><center>Most Relevent Tweets</center></h3>
 
 	    		{% for tweet in tweets %}
-				    <div class="card"> {{ tweet }} </div>
-				{% endfor %}
+				<div class="card"> {{ tweet }} </div>
+			{% endfor %}
 
-			</div>
+		</div>
 
 		<div class="rightpane">
 			<div id="first">
 			</div>
 			<div id="second">
 		  		<h1>Bar chart will come here</h1>
+				{% for word in words %}
+	 		  	 	<p> {{ word }} </p>
+				{% endfor %}
 			</div>
-			<div id="third">
-		  		<h1>Map will come here</h1>
-			</div>
-
-
-
-
-
+			<div id="third"></div>
 		</div>
-
-	    </div>
-
-    	<!--
-
-		<div id="div1">
-		  		<img src="{{ img_path }}" alt="word cloud">
-			</div>
-
-			<div id="div2">
-			</div>
-			<div id="div3">
-			</div>
-			<div id="div4">
-			</div>
-
-		<div class="card">
-			  <div class="content">
-			    <h4>Card title</h4>
-			    <p>Content....</p> </div>
-			</div>
-
-    	<div class="container">
-		  <div class="leftpane">
-		    <h1>Raw Tweets</h1>
-		    {% for tweet in tweets %}
-			    <p> {{ tweet }} </p>
-			{% endfor %}
-
-		  </div>
-		  <div class="rightpane">
-
-		  	<div id="div1">
-		  		<img src="{{ img_path }}" alt="word cloud">
-			</div>
-			<div id="div2">
-			</div>
-			<div id="div3">
-			</div>
-			<div id="div4">
-			</div>
-
-
-		     
-		   </div>
-	</div>-->
+	</div>
 
 	<!--<div>
 		{% for tweet in tweets %}
@@ -132,10 +84,22 @@
 
 	</div>-->
 
-	
-
-
-
-
 </body>
+
+<footer>
+	<script type="text/javascript">
+		var graphs = {{graphJSON | safe}};
+
+		var layout = { 
+	  		title: 'Tweets from April 1 to April 3!',
+	 		font: {size: 10},
+			width: 1420,
+			height: 650,
+		};
+
+		var config = {responsive: true}
+        	Plotly.plot('third', graphs, layout, config);        
+    	</script>
+</footer>
+
 </html>
