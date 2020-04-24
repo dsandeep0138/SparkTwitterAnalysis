@@ -9,6 +9,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="static/js/jqcloud-1.0.4.js"></script>
 	<script src="static/js/scripts2.js"></script>
+	
  	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 </head>
@@ -57,12 +58,42 @@
 			<div id="first">
 			</div>
 			<div id="second">
-		  		<h1>Bar chart will come here</h1>
-				{% for word in words %}
-	 		  	 	<p> {{ word }} </p>
+		  		<h3>Most Used Hashtags (#)</h3>
+
+				{% for word in hashtags %}
+	 		  	 	<p> {{ word}} </p>
 				{% endfor %}
+				<script type="text/javascript">
+				var data = [
+				  {
+				    x: {{hashtags | safe}},
+				    y: {{hashcounts | safe}},
+				    type: 'bar'
+				  }
+				];
+
+				Plotly.newPlot('second', data);
+				
+				</script>
+				
 			</div>
-			<div id="third"></div>
+
+			<div id="third">
+				<script type="text/javascript">
+				var graphs = {{graphJSON | safe}};
+
+				var layout = { 
+			  		title: 'Tweets from April 1 to April 3!',
+			 		font: {size: 10},
+					width: 900,
+					height: 650,
+				};
+
+				var config = {responsive: true}
+		        Plotly.plot('third', graphs, layout, config);        
+		    	</script>
+
+			</div>
 		</div>
 	</div>
 
@@ -87,19 +118,7 @@
 </body>
 
 <footer>
-	<script type="text/javascript">
-		var graphs = {{graphJSON | safe}};
-
-		var layout = { 
-	  		title: 'Tweets from April 1 to April 3!',
-	 		font: {size: 10},
-			width: 1420,
-			height: 650,
-		};
-
-		var config = {responsive: true}
-        	Plotly.plot('third', graphs, layout, config);        
-    	</script>
+	
 </footer>
 
 </html>

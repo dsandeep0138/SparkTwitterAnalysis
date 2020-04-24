@@ -48,31 +48,6 @@ body {
 }
 
 
-#div1 { 
-  width: 50%;
-  height: 50%;
-  float: left;
-  background: #DDD; 
-}
-#div2 {
-  width: 50%;
-   height: 50%;
-    float: left;
- background: #AAA;
-  }
-#div3 { 
-  width: 50%;
-   height: 50%;
-  float: left;
-  background: #F0B27A ;
-   }
-#div4 {
-  width: 50%;
-   height: 50%; 
-   float: left;
- background: #444; 
-}
-
 .card {
   border: 1px solid #d3d3d3;
   border-radius: .25rem;
