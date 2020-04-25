@@ -5,6 +5,7 @@ from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
 from pyspark.streaming.kafka import KafkaUtils
 from pyspark.streaming.kafka import TopicAndPartition
+from textblob import TextBlob
 
 
 def sendTopWords(counts, url):
@@ -47,6 +48,19 @@ def sendTweets(tweets, url):
     tweets.foreachRDD(takeAndSend)
 
 
+def sendTweetSentiments(sentiments, url):
+    def takeAndSend(time, rdd):
+        if not rdd.isEmpty():
+            (name, (total, (pos, neutral, neg))) = rdd.first()
+
+            json_data = {'positive': pos, 'neutral': neutral, 'negative': neg, 'total': total}
+            print(json_data)
+
+            response = requests.post(url, data=json_data)
+
+    sentiments.foreachRDD(takeAndSend)
+
+
 def sendGeoData(path, url):
     filepath = "file:///" + path
     geodata = sc.textFile(filepath) \
@@ -76,6 +90,27 @@ def sendTweetsFromStream(kvs, url):
                 .transform(lambda rdd: rdd.sortBy(lambda x: x[2], ascending = False))
     tweets.pprint()
     sendTweets(tweets, url)
+
+
+def getSentiment(text):
+    sent = TextBlob(text).sentiment.polarity
+
+    if sent > 0:
+        return (1, 0, 0)
+    elif sent == 0:
+        return (0, 1, 0)
+    else:
+        return (0, 0, 1)
+
+
+def sendTweetSentimentsFromStream(kvs, url):
+    sentiments = kvs.map(lambda x: x[1].encode("ascii", "ignore")) \
+                    .map(lambda x: json.loads(x)) \
+                    .map(lambda json_object: (json_object["user"]["screen_name"], json_object["text"], getSentiment(json_object["text"]))) \
+                    .map(lambda kv: ('count', (1, kv[2]))) \
+                    .reduceByKey(lambda a, b: (a[0] + b[0], (a[1][0] + b[1][0], a[1][1] + b[1][1], a[1][2] + b[1][2])))
+    sentiments.pprint()
+    sendTweetSentiments(sentiments, url)
 
 
 def sendTopHashtagsFromStream(kvs, url):
@@ -123,12 +158,13 @@ if __name__ == "__main__":
     brokers, topic, geodata_path = sys.argv[1:]
     
     server = 'http://localhost:5000/'
-    sendGeoData(geodata_path, server + 'update_geodata') 
+    sendGeoData(geodata_path, server + 'update_geodata')
 
     kvs = KafkaUtils. \
         createDirectStream(ssc, [topic], {"metadata.broker.list": brokers, "auto.offset.reset": "smallest"})
 
     sendTweetsFromStream(kvs, server + 'update_tweets')
+    sendTweetSentimentsFromStream(kvs, server + 'update_sentiments')
     sendTopHashtagsFromStream(kvs, server + 'update_hashtagcounts')
     sendTopWordsFromStream(kvs, server + 'update_counts')
 

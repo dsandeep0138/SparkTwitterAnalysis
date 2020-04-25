@@ -22,22 +22,22 @@
 
         <div class="counter_container total_counter">
             <p class="counter_title">Tweets Analyzed</p>
-            <h3 id="total_counter_value">0</h3>
+	    <h3 id="total_counter_value"> {{ sentiments['total'] }} </h3>
         </div>
 
         <div id="negative_counter_container" class="counter_container">
             <p class="counter_title">Negative</p>
-            <h3 id="negative_counter">0%</h3>
+	    <h3 id="negative_counter"> {{ sentiments['negative'] }} %</h3>
         </div>
 
         <div id="neutral_counter_container" class="counter_container">
             <p class="counter_title">Neutral</p>
-            <h3 id="neutral_counter">0%</h3>
+	    <h3 id="neutral_counter"> {{ sentiments['neutral'] }} %</h3>
         </div>
 
         <div id="positive_counter_container" class="counter_container">
             <p class="counter_title">Positive</p>
-            <h3 id="positive_counter">0%</h3>
+	    <h3 id="positive_counter"> {{ sentiments['positive'] }} %</h3>
         </div>
 
         <script src="static/js/counters_setter.js"></script>

@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.config['IMAGES_PATH'] = os.path.join('static', 'images')
 
 tweets = {'users': ['RchavezRuben'], 'text': ['RT @KenDilanianNBC: Imagine if, two months ago, a competent federal government had led a World War II-level effort to ramp up production of…']}
+sentiments = {'positive': 23, 'neutral': 23, 'negative': 4, 'total': 50}
 hashtag_counts = {'words': ['#SocialDistancing'], 'counts': [16]}
 word_counts = {'words': ['COVID19'], 'counts': [16]}
 geodata = {'longitude': [], 'latitude': []}
@@ -19,6 +20,7 @@ graphJSON = {}
 @app.route("/")
 def home_page():
     global tweets
+    global sentiments
     global hashtag_counts
     global word_counts
     global geodata
@@ -50,11 +52,10 @@ def home_page():
     data = [trace]
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
-    print(graphJSON)
-
     return render_template(
             'hello.html',
             tweets=tweets['text'],
+            sentiments=sentiments,
             words=word_counts['words'],
             img_path=img_path,
             jqCloud_word_count=jqCloud_word_count,
@@ -80,6 +81,25 @@ def update_tweet_data():
     tweets['users'] = ast.literal_eval(request.form['user'])
     tweets['text'] = ast.literal_eval(request.form['text'])
     
+    return "success", 200
+
+
+@app.route('/update_sentiments', methods=['POST'])
+def update_sentiments():
+    global sentiments
+
+    print(request.form)
+
+    sentiments['positive'] = ast.literal_eval(request.form['positive'])
+    sentiments['neutral'] = ast.literal_eval(request.form['neutral'])
+    sentiments['negative'] = ast.literal_eval(request.form['negative'])
+    sentiments['total'] = ast.literal_eval(request.form['total'])
+
+    if sentiments['total'] > 0:
+        sentiments['positive'] = round(sentiments['positive'] / sentiments['total'], 2)
+        sentiments['neutral'] = round(sentiments['neutral'] / sentiments['total'], 2)
+        sentiments['negative'] = round(sentiments['negative'] / sentiments['total'], 2)
+
     return "success", 200
 
 
@@ -143,6 +163,13 @@ def refresh_counts():
     output = json.dumps(word_counts['words'])
     print(output)
     return output
+
+
+@app.route('/sentiments', methods=['GET'])
+def refresh_sentiments():
+    global sentiments
+    print(sentiments)
+    return sentiments
 
 
 @app.after_request
