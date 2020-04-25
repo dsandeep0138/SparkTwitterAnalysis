@@ -10,8 +10,8 @@ app.config['IMAGES_PATH'] = os.path.join('static', 'images')
 tweets = {'users': ['RchavezRuben'], 'text': ['RT @KenDilanianNBC: Imagine if, two months ago, a competent federal government had led a World War II-level effort to ramp up production of…']}
 sentiments = {'positive': 23, 'neutral': 23, 'negative': 4, 'total': 50}
 hashtag_counts = {'words': ['#SocialDistancing'], 'counts': [16]}
-word_counts = {'words': ['COVID19'], 'counts': [16]}
-geodata = {'longitude': [], 'latitude': []}
+word_counts = {'words': ['COVID19', 'Quarantine'], 'counts': [16,50]}
+geodata = {'longitude': [-96.314445], 'latitude': [30.601389]}
 img_path = os.path.join(app.config['IMAGES_PATH'], 'wordcloud.jpg')
 jqCloud_word_count = []
 graphJSON = {}
@@ -59,7 +59,9 @@ def home_page():
             words=word_counts['words'],
             img_path=img_path,
             jqCloud_word_count=jqCloud_word_count,
-            graphJSON=graphJSON)
+            graphJSON=graphJSON,
+            hashtags=hashtag_counts['words'],
+            hashcounts=hashtag_counts['counts'])
 
 
 @app.route('/update_geodata', methods=['POST'])
@@ -160,7 +162,7 @@ def tweets_refresh():
 @app.route('/word_counts', methods=['GET'])
 def refresh_counts():
     global word_counts
-    output = json.dumps(word_counts['words'])
+    output = json.dumps(hashtag_counts)
     print(output)
     return output
 
