@@ -8,7 +8,7 @@ Spark streaming:
 6. Make sure JAVA_HOME is set to JDK version 1.8
 7. Install nltk and kafka-python (pip install nltk and pip install kafks-python)
 8. Download the spark-streaming-kafka-assembly_2.11-1.6.0.jar file in this project to the local workspace
-9. Use the following command to run now: bin\spark-submit --jars spark-streaming-kafka-assembly_2.11-1.6.0.jar D:\Spring2020\csce678\project\code\spark-kafka.py 3.22.26.9:9092 twitter_stream
+9. Use the following command to run now: bin\spark-submit --jars spark-streaming-kafka-assembly_2.11-1.6.0.jar D:\Spring2020\csce678\project\code\cloudproject\spark-kafka-local.py 3.22.26.9:9092 twitter_stream_new D:\Spring2020\csce678\project\code\cloudproject\geo_tweets.txt
 
 Flask:
 
