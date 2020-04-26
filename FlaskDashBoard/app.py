@@ -10,9 +10,8 @@ app.config['IMAGES_PATH'] = os.path.join('static', 'images')
 tweets = {'users': ['RchavezRuben'], 'text': ['RT @KenDilanianNBC: Imagine if, two months ago, a competent federal government had led a World War II-level effort to ramp up production of…']}
 sentiments = {'positive': 23, 'neutral': 23, 'negative': 4, 'total': 50}
 hashtag_counts = {'words': ['#SocialDistancing'], 'counts': [16]}
-word_counts = {'words': ['COVID19', 'Quarantine'], 'counts': [16,50]}
+word_counts = {'words': ['COVID19', 'Quarantine'], 'counts': [16, 50]}
 geodata = {'longitude': [-96.314445], 'latitude': [30.601389]}
-img_path = os.path.join(app.config['IMAGES_PATH'], 'wordcloud.jpg')
 jqCloud_word_count = []
 graphJSON = {}
 
@@ -25,7 +24,6 @@ def home_page():
     global word_counts
     global geodata
     global graphJSON
-    global img_path
     global jqCloud_word_count
 
     print("Tweets variable", file=sys.stderr)
@@ -34,16 +32,9 @@ def home_page():
     print(word_counts, file=sys.stderr)
     print("hashtag variable", file=sys.stderr)
     print(hashtag_counts, file=sys.stderr)
-	
     print(hashtag_counts['words'], file=sys.stderr)
-    img_path = os.path.join(app.config['IMAGES_PATH'], 'wordcloud.jpg')
     
     wc = dict(zip(hashtag_counts['words'], hashtag_counts['counts']))
-    
-    wordcloud = WordCloud()
-    wordcloud.generate_from_frequencies(frequencies = wc)
-    wordcloud.to_file(img_path)
-
     jqCloud_word_count = [{'text': word, 'weight': count} for word, count in wc.items()]
 
     trace = go.Scattergeo(lon = geodata['longitude'],
@@ -53,15 +44,12 @@ def home_page():
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template(
-            'hello.html',
+            'index.html',
             tweets=tweets['text'],
             sentiments=sentiments,
-            words=word_counts['words'],
-            img_path=img_path,
+            wordcounts=word_counts,
             jqCloud_word_count=jqCloud_word_count,
-            graphJSON=graphJSON,
-            hashtags=hashtag_counts['words'],
-            hashcounts=hashtag_counts['counts'])
+            graphJSON=graphJSON)
 
 
 @app.route('/update_geodata', methods=['POST'])
@@ -98,9 +86,9 @@ def update_sentiments():
     sentiments['total'] = ast.literal_eval(request.form['total'])
 
     if sentiments['total'] > 0:
-        sentiments['positive'] = round(sentiments['positive'] / sentiments['total'], 2)
-        sentiments['neutral'] = round(sentiments['neutral'] / sentiments['total'], 2)
-        sentiments['negative'] = round(sentiments['negative'] / sentiments['total'], 2)
+        sentiments['positive'] = round(100 * sentiments['positive'] / sentiments['total'], 2)
+        sentiments['neutral'] = round(100 * sentiments['neutral'] / sentiments['total'], 2)
+        sentiments['negative'] = round(100 * sentiments['negative'] / sentiments['total'], 2)
 
     return "success", 200
 
@@ -129,17 +117,6 @@ def update_hashtagcounts():
     return "success", 200
 
 
-@app.route('/refresh_hashtagcounts', methods=['GET'])
-def refresh_hashtagcounts():
-    global hashtag_counts
-    global img_path
-    wc = dict(zip(hashtag_counts['words'], hashtag_counts['counts']))
-    wordcloud = WordCloud()
-    wordcloud.generate_from_frequencies(frequencies = wc)
-    wordcloud.to_file(img_path)
-    return "success", 200
-
-
 @app.route('/word_cloud', methods=['GET'])
 def word_cloud():
     global jqCloud_word_count
@@ -162,7 +139,7 @@ def tweets_refresh():
 @app.route('/word_counts', methods=['GET'])
 def refresh_counts():
     global word_counts
-    output = json.dumps(hashtag_counts)
+    output = json.dumps(word_counts)
     print(output)
     return output
 
@@ -172,6 +149,18 @@ def refresh_sentiments():
     global sentiments
     print(sentiments)
     return sentiments
+
+
+@app.route('/graph', methods=['GET'])
+def refresh_graph():
+    global geodata
+    global graphJSON
+
+    trace = go.Scattergeo(lon = geodata['longitude'],
+                          lat = geodata['latitude'],
+                          mode = 'markers')
+    data = [trace]
+    return json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
 
 @app.after_request

@@ -78,8 +78,6 @@ def sendGeoData(path, url):
         latitudes.append(geotweet[1])
 
     json_data = {'longitude': str(longitudes), 'latitude': str(latitudes)}
-    print(json_data)
-
     response = requests.post(url, data=json_data)
 
 
@@ -164,9 +162,9 @@ if __name__ == "__main__":
         createDirectStream(ssc, [topic], {"metadata.broker.list": brokers, "auto.offset.reset": "smallest"})
 
     sendTweetsFromStream(kvs, server + 'update_tweets')
-    sendTweetSentimentsFromStream(kvs, server + 'update_sentiments')
     sendTopHashtagsFromStream(kvs, server + 'update_hashtagcounts')
     sendTopWordsFromStream(kvs, server + 'update_counts')
+    sendTweetSentimentsFromStream(kvs, server + 'update_sentiments')
 
     ssc.start()
     ssc.awaitTerminationOrTimeout(60)

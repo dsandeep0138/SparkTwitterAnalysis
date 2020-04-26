@@ -18,7 +18,7 @@
 	<div class="header">
 
         <div class="counter_container title">
-            <h3>Real-Time Twitter Analysis</h3>
+		<h3>Real-Time<br />Twitter Analysis</h3>
         </div>
 
         <div class="counter_container total_counter">
@@ -41,12 +41,9 @@
 	    <h3 id="positive_counter"> {{ sentiments['positive'] }} %</h3>
         </div>
 
-        <script src="static/js/counters_setter.js"></script>
-    	</div>
-
     	<div class="my_container">
 	    	<div id="RawTweets" class="leftpane">
-	    		<h3><center>Most Relevent Tweets</center></h3>
+	                <h3><center>Most Relevant Tweets</center></h3>
 
 	    		{% for tweet in tweets %}
 				<div class="card"> {{ tweet }} </div>
@@ -58,67 +55,37 @@
 			<div id="first">
 			</div>
 			<div id="second">
-		  		<h3>Most Used Hashtags (#)</h3>
-
-				{% for word in hashtags %}
-	 		  	 	<p> {{ word}} </p>
-				{% endfor %}
-				<script type="text/javascript">
-				var data = [
-				  {
-				    x: {{hashtags | safe}},
-				    y: {{hashcounts | safe}},
+			<script type="text/javascript">
+				var data = [{
+				    x: {{wordcounts['words'] | safe}},
+				    y: {{wordcounts['counts'] | safe}},
 				    type: 'bar'
-				  }
-				];
+				}];
 
-				Plotly.newPlot('second', data);
-				
-				</script>
-				
+				var layout = {
+					title: 'Most used terms',
+				};
+
+				Plotly.newPlot('second', data, layout);
+			</script>
 			</div>
 
-			<div id="third">
-				<script type="text/javascript">
+			<div id="third" style="width: 100%; height: 70%;">
+			<script type="text/javascript">
 				var graphs = {{graphJSON | safe}};
 
 				var layout = { 
-			  		title: 'Tweets from April 1 to April 3!',
-			 		font: {size: 10},
-					width: 900,
-					height: 650,
+					title: 'Tweets from April 1 to April 3!',
+					font: {size: 10},
+					showlegend: false,
 				};
 
-				var config = {responsive: true}
-		        Plotly.plot('third', graphs, layout, config);        
+				var config = {responsive: true};
+				Plotly.plot('third', graphs, layout, config);
 		    	</script>
-
 			</div>
-		</div>
+		 </div>
 	</div>
-
-	<!--<div>
-		{% for tweet in tweets %}
-		    <p> {{ tweet }} </p>
-		{% endfor %}
-	</div>
-
-	<div>
-		<img src="{{ img_path }}">
-	</div>
-
-	<div>
-			
-	{% for word in words %}
-	    <p> {{ word }} </p>
-	{% endfor %}
-
-	</div>-->
 
 </body>
-
-<footer>
-	
-</footer>
-
 </html>

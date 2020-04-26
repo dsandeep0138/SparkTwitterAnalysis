@@ -23,7 +23,7 @@ setInterval(function(){
     $.ajax({url: '/tweets', success: function(data) {
     var tweets_data = $.parseJSON(data);
     $('#RawTweets').html("")
-    $("#RawTweets").append("<h1>Raw Tweets</h1>")
+    $("#RawTweets").append("<h3><center>Most Relevant Tweets</center></h3>")
     $.each(tweets_data, function(i, item) {
             $("#RawTweets").append("<div class=\"card\">" + item + "</div>");
     });
@@ -33,29 +33,41 @@ setInterval(function(){
 
 setInterval(function(){
     $.ajax({url: '/word_counts', success: function(data) {
-    var counts_data = $.parseJSON(data);
-    var data = [
-              {
-                x: counts_data['words'],
-                y: counts_data['counts'],
-                type: 'bar'
-              }
-            ];
+        var counts_data = $.parseJSON(data);
+        var data = [{
+		x: counts_data['words'],
+		y: counts_data['counts'],
+		type: 'bar'
+        }];
 
-    $('#second').html("")
-    $("#second").append("<h1>Bar chart will go here</h1>")
-    $.each(counts_data, function(i, item) {
-            $("#second").append(Plotly.newPlot('second', data));
-    });
+        var layout = {
+		title: 'Most used terms',
+        };
+
+        Plotly.newPlot('second', data, layout);
     }});
 },5000);
+
+
+setInterval(function(){
+    $.ajax({url: '/graph', success: function(data) {
+        var graphs = $.parseJSON(data);
+        var layout = {
+		title: 'Tweets from April 1 to April 3!',
+		font: {size: 10},
+		showlegend: false,
+        };
+
+        var config = {responsive: true};
+        Plotly.newPlot('third', graphs, layout, config);
+    }});
+}, 5000);
 
 
 setInterval(function(){
     $.ajax({
 	url: '/sentiments',
 	success: function(data) {
-		console.log(data)
 		$("#total_counter_value").html(data['total'])
 		$("#positive_counter").html(data['positive'] + " %")
 		$("#neutral_counter").html(data['neutral'] + " %")
