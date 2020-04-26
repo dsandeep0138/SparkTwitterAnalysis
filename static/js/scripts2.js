@@ -34,10 +34,18 @@ setInterval(function(){
 setInterval(function(){
     $.ajax({url: '/word_counts', success: function(data) {
     var counts_data = $.parseJSON(data);
+    var data = [
+              {
+                x: counts_data['words'],
+                y: counts_data['counts'],
+                type: 'bar'
+              }
+            ];
+
     $('#second').html("")
     $("#second").append("<h1>Bar chart will go here</h1>")
     $.each(counts_data, function(i, item) {
-            $("#second").append("<p>" + item + "</p>");
+            $("#second").append(Plotly.newPlot('second', data));
     });
     }});
 },5000);
