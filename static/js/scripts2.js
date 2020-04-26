@@ -10,7 +10,6 @@ $(document).ready(function () {
 
 setInterval(function(){
     $.ajax({url: '/word_cloud', success: function(data) {
-    console.log(data)
     var words_data = $.parseJSON(data);
     $('#first').html("")
     $('#first').jQCloud(words_data, {
@@ -19,9 +18,9 @@ setInterval(function(){
     }});
 },5000);
 
+
 setInterval(function(){
     $.ajax({url: '/tweets', success: function(data) {
-    console.log(data)
     var tweets_data = $.parseJSON(data);
     $('#RawTweets').html("")
     $("#RawTweets").append("<h1>Raw Tweets</h1>")
@@ -31,9 +30,9 @@ setInterval(function(){
     }});
 },5000);
 
+
 setInterval(function(){
     $.ajax({url: '/word_counts', success: function(data) {
-    console.log(data)
     var counts_data = $.parseJSON(data);
     var data = [
               {
@@ -49,4 +48,18 @@ setInterval(function(){
             $("#second").append(Plotly.newPlot('second', data));
     });
     }});
+},5000);
+
+
+setInterval(function(){
+    $.ajax({
+	url: '/sentiments',
+	success: function(data) {
+		console.log(data)
+		$("#total_counter_value").html(data['total'])
+		$("#positive_counter").html(data['positive'] + " %")
+		$("#neutral_counter").html(data['neutral'] + " %")
+		$("#negative_counter").html(data['negative'] + " %")
+	}
+    });
 },5000);
