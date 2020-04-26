@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import sys, ast, os, json
-from wordcloud import WordCloud
 import plotly
 import plotly.graph_objects as go
 
