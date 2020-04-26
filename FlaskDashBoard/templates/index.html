@@ -59,11 +59,23 @@
 				var data = [{
 				    x: {{wordcounts['words'] | safe}},
 				    y: {{wordcounts['counts'] | safe}},
-				    type: 'bar'
+				    type: 'bar',
+				    text: wordcounts['counts'].map(String),
+				    textposition: 'auto',
+				    hoverinfo: 'none',
+				    marker: {
+					color: 'rgb(220, 248, 198)',
+					opacity: 0.6,
+					line: {
+						color: 'rgb(8, 48, 107)',
+						width: 1.5
+					}
+				    }
 				}];
 
 				var layout = {
 					title: 'Most used terms',
+					barmode: 'stack'
 				};
 
 				Plotly.newPlot('second', data, layout);

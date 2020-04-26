@@ -37,11 +37,23 @@ setInterval(function(){
         var data = [{
 		x: counts_data['words'],
 		y: counts_data['counts'],
-		type: 'bar'
+		type: 'bar',
+		text: counts_data['counts'].map(String),
+		textposition: 'auto',
+		hoverinfo: 'none',
+		marker: {
+			color: 'rgb(220, 248, 198)',
+			opacity: 0.6,
+			line: {
+				color: 'rgb(8, 48, 107)',
+				width: 1.5
+			}
+		}
         }];
 
         var layout = {
 		title: 'Most used terms',
+		barmode: 'stack'
         };
 
         Plotly.newPlot('second', data, layout);

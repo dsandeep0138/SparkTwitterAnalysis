@@ -28,16 +28,16 @@ div.jqcloud { color: #09f; }
 div.jqcloud a { color: inherit; }
 div.jqcloud a:hover { color: #0df; }
 div.jqcloud a:hover { color: #0cf; }
-div.jqcloud span.w10 { color: #0cf; }
-div.jqcloud span.w9 { color: #0cf; }
-div.jqcloud span.w8 { color: #0cf; }
-div.jqcloud span.w7 { color: #39d; }
-div.jqcloud span.w6 { color: #90c5f0; }
-div.jqcloud span.w5 { color: #90a0dd; }
-div.jqcloud span.w4 { color: #90c5f0; }
-div.jqcloud span.w3 { color: #a0ddff; }
-div.jqcloud span.w2 { color: #99ccee; }
-div.jqcloud span.w1 { color: #aab5f0; }
+div.jqcloud span.w10 { color: #800026; }
+div.jqcloud span.w9 { color: #bd0026; }
+div.jqcloud span.w8 { color: #9b59b6; }
+div.jqcloud span.w7 { color: #3498db; }
+div.jqcloud span.w6 { color: #95a5a6; }
+div.jqcloud span.w5 { color: #e74c3c; }
+div.jqcloud span.w4 { color: #34495e; }
+div.jqcloud span.w3 { color: #2ecc71; }
+div.jqcloud span.w2 { color: #516951; }
+div.jqcloud span.w1 { color: #a8a2a2; }
 
 /* layout */
 
