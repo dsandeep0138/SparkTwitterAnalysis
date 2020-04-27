@@ -70,6 +70,7 @@ def update_tweet_data():
     tweets['users'] = ast.literal_eval(request.form['user'])
     tweets['text'] = ast.literal_eval(request.form['text'])
     tweets['id'] = ast.literal_eval(request.form['id'])
+    tweets['id'] = [str(tweet_id) for tweet_id in tweets['id']]
     
     return "success", 200
 
