@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 app = Flask(__name__)
 app.config['IMAGES_PATH'] = os.path.join('static', 'images')
 
-tweets = {'users': ['RchavezRuben'], 'text': ['RT @KenDilanianNBC: Imagine if, two months ago, a competent federal government had led a World War II-level effort to ramp up production of…']}
+tweets = {'users': ['RchavezRuben'], 'text': ['RT @KenDilanianNBC: Imagine if, two months ago, a competent federal government had led a World War II-level effort to ramp up production of…'], 'id': [123456789]}
 sentiments = {'positive': 23, 'neutral': 23, 'negative': 4, 'total': 50}
 hashtag_counts = {'words': ['#SocialDistancing'], 'counts': [16]}
 word_counts = {'words': ['COVID19', 'Quarantine'], 'counts': [16, 50]}
@@ -44,7 +44,7 @@ def home_page():
 
     return render_template(
             'index.html',
-            tweets=tweets['text'],
+            tweets=zip(tweets['users'], tweets['text'], tweets['id']),
             sentiments=sentiments,
             wordcounts=word_counts,
             jqCloud_word_count=jqCloud_word_count,
@@ -69,6 +69,7 @@ def update_tweet_data():
     
     tweets['users'] = ast.literal_eval(request.form['user'])
     tweets['text'] = ast.literal_eval(request.form['text'])
+    tweets['id'] = ast.literal_eval(request.form['id'])
     
     return "success", 200
 
@@ -130,7 +131,7 @@ def word_cloud():
 @app.route('/tweets', methods=['GET'])
 def tweets_refresh():
     global tweets
-    output = json.dumps(tweets['text'])
+    output = json.dumps(tweets)
     print(output)
     return output
 

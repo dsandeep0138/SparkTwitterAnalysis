@@ -45,8 +45,12 @@
 	    	<div id="RawTweets" class="leftpane">
 	                <h3><center>Most Relevant Tweets</center></h3>
 
-	    		{% for tweet in tweets %}
-				<div class="card"> {{ tweet }} </div>
+	    		{% for user, text, id in tweets %}
+				<div class="card">
+					<a href={{"https://twitter.com/" ~ user ~ "/status/" ~ id}}>
+						{{text}}
+					</a>
+				</div>
 			{% endfor %}
 
 		</div>
@@ -60,7 +64,7 @@
 				    x: {{wordcounts['words'] | safe}},
 				    y: {{wordcounts['counts'] | safe}},
 				    type: 'bar',
-				    text: wordcounts['counts'].map(String),
+				    text: {{wordcounts['counts'] | safe}}.map(String),
 				    textposition: 'auto',
 				    hoverinfo: 'none',
 				    marker: {
@@ -75,14 +79,14 @@
 
 				var layout = {
 					title: 'Most used terms',
-					barmode: 'stack'
+					barmode: 'stack',
 				};
 
 				Plotly.newPlot('second', data, layout);
 			</script>
 			</div>
 
-			<div id="third" style="width: 100%; height: 70%;">
+			<div id="third" style="width: 100%;">
 			<script type="text/javascript">
 				var graphs = {{graphJSON | safe}};
 

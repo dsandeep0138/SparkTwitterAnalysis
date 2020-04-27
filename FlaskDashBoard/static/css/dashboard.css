@@ -59,30 +59,42 @@ body {
     padding: 15px;
 }
 
+.card:hover {
+    background-color: rgba(230, 80, 16, 0.2);
+}
+
+a {
+    text-decoration: none; 
+    color: black;
+}
+
 .leftpane {
     width: 34.6vw;
     height: 100%;
     float: left;
     padding: 0.5vh 0.5vw;
-    background-color: #F2F4F4 ;
+    background-color: #F2F4F4;
     border: 1px solid #F4F6F6;
     border-collapse: collapse;
 }
 
 #first{ 
-    width: 50%;
-    height: 250px;
+    width: 30vw;
+    height: 30vh;
     float: left;
+    border: 0.5vw solid #F4F6F6;
+    background-color: white;
 }
 
 #second { 
-    width: 50%;
-    height: 250px;
+    width: 30vw;
+    height: 30vh;
     float: left;
+    border: 0.5vw solid #F4F6F6;
 }
 
 #third {
-    width: 100%;
-    height: 250px;
+    height: 65vh;
     float: left;
+    border: 0.5vw solid #F4F6F6;
 }

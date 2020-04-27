@@ -35,12 +35,14 @@ def sendTweets(tweets, url):
 
             users = []
             texts = []
+            tweet_ids = []
 
-            for (user, text, follower_count) in tweets_data:
+            for (user, text, follower_count, tweet_id) in tweets_data:
                 users.append(user)
                 texts.append(text)
+                tweet_ids.append(tweet_id)
 
-            json_data = {'user': str(users), 'text': str(texts)}
+            json_data = {'user': str(users), 'text': str(texts), 'id': str(tweet_ids)}
             print(json_data)
 
             response = requests.post(url, data=json_data)
@@ -84,7 +86,7 @@ def sendGeoData(path, url):
 def sendTweetsFromStream(kvs, url):
     tweets = kvs.map(lambda x: x[1].encode("ascii", "ignore")) \
                 .map(lambda x: json.loads(x)) \
-                .map(lambda json_object: (json_object["user"]["screen_name"], json_object["text"], json_object["user"]["followers_count"])) \
+                .map(lambda json_object: (json_object["user"]["screen_name"], json_object["text"], json_object["user"]["followers_count"], json_object["id"])) \
                 .transform(lambda rdd: rdd.sortBy(lambda x: x[2], ascending = False))
     tweets.pprint()
     sendTweets(tweets, url)
