@@ -3,5 +3,5 @@ flask==1.2.0.dev
 plotly==4.4.1
 kafka-python==2.0.1
 psutil==5.7.0
-pyspark==2.4.5
+pyspark==3.2.2
 textblob==0.15.3
